@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Symbols LinesOfCode="647" PostSharpLinesOfCode="0" EnhancedTypesCount="4" SchemaVersion="1" PostSharpVersion="6.9.6.0" xmlns="http://schemas.postsharp.org/2.0/symbols">
+  <Class Class="#1=T:[PostSharp]PostSharp.Serialization.PSerializableAttribute">
+    <Instance Declaration="#2=T:[App.Domain.WEB]App.Domain.WEB.Utils.StringArrayInterceptorAttribute" Id="5ab688a735152722">
+      <Target />
+    </Instance>
+    <Instance Declaration="#3=T:[App.Domain.WEB]App.Domain.WEB.Utils.StringInterceptorAttribute" Id="5ab688a7c3668338">
+      <Target />
+    </Instance>
+  </Class>
+  <Class Class="#2">
+    <Instance Declaration="#4=P:[App.Domain.WEB]App.Domain.WEB.Models.AgreementFilterViewModel::CatFilter()" Id="5ab688a79548607f">
+      <Target LinesAvoided="2" Tags="premium">
+        <JoinPoint Advised="#5=M:[App.Domain.WEB]App.Domain.WEB.Models.AgreementFilterViewModel::set_CatFilter(System.String[])" Description="#6=Intercepted by advice OnSetValue" Semantic="Setter" Ordinal="2" />
+      </Target>
+    </Instance>
+  </Class>
+  <Class Class="#3">
+    <Instance Declaration="#7=P:[App.Domain.WEB]App.Domain.WEB.Models.AgreementFilterViewModel::SortOrder()" Id="5ab688a7fb323d77">
+      <Target LinesAvoided="4" Tags="premium">
+        <JoinPoint Advised="#8=M:[App.Domain.WEB]App.Domain.WEB.Models.AgreementFilterViewModel::get_SortOrder()" Description="#9=Intercepted by advice OnGetValue" Semantic="Getter" Ordinal="0" />
+        <JoinPoint Advised="#10=M:[App.Domain.WEB]App.Domain.WEB.Models.AgreementFilterViewModel::set_SortOrder(System.String)" Description="#6" Semantic="Setter" />
+      </Target>
+    </Instance>
+    <Instance Declaration="#11=P:[App.Domain.WEB]App.Domain.WEB.Models.AgreementFilterViewModel::ExecUsrNameFilter()" Id="5ab688a77a31b3e0">
+      <Target LinesAvoided="4" Tags="premium">
+        <JoinPoint Advised="#12=M:[App.Domain.WEB]App.Domain.WEB.Models.AgreementFilterViewModel::get_ExecUsrNameFilter()" Description="#9" Semantic="Getter" Ordinal="3" />
+        <JoinPoint Advised="#13=M:[App.Domain.WEB]App.Domain.WEB.Models.AgreementFilterViewModel::set_ExecUsrNameFilter(System.String)" Description="#6" Semantic="Setter" Ordinal="4" />
+      </Target>
+    </Instance>
+    <Instance Declaration="#14=P:[App.Domain.WEB]App.Domain.WEB.Models.AgreementFilterViewModel::CustomerUsrNameFilter()" Id="5ab688a7c4cd48eb">
+      <Target LinesAvoided="4" Tags="premium">
+        <JoinPoint Advised="#15=M:[App.Domain.WEB]App.Domain.WEB.Models.AgreementFilterViewModel::get_CustomerUsrNameFilter()" Description="#9" Semantic="Getter" Ordinal="5" />
+        <JoinPoint Advised="#16=M:[App.Domain.WEB]App.Domain.WEB.Models.AgreementFilterViewModel::set_CustomerUsrNameFilter(System.String)" Description="#6" Semantic="Setter" Ordinal="6" />
+      </Target>
+    </Instance>
+    <Instance Declaration="#17=P:[App.Domain.WEB]App.Domain.WEB.Models.UsersFilterViewModel::SortOrder()" Id="5ab688a788335b85">
+      <Target LinesAvoided="4" Tags="premium">
+        <JoinPoint Advised="#18=M:[App.Domain.WEB]App.Domain.WEB.Models.UsersFilterViewModel::get_SortOrder()" Description="#9" Semantic="Getter" Ordinal="7" />
+        <JoinPoint Advised="#19=M:[App.Domain.WEB]App.Domain.WEB.Models.UsersFilterViewModel::set_SortOrder(System.String)" Description="#6" Semantic="Setter" Ordinal="8" />
+      </Target>
+    </Instance>
+    <Instance Declaration="#20=P:[App.Domain.WEB]App.Domain.WEB.Models.UsersFilterViewModel::NameFilter()" Id="5ab688a782cdb6ff">
+      <Target LinesAvoided="4" Tags="premium">
+        <JoinPoint Advised="#21=M:[App.Domain.WEB]App.Domain.WEB.Models.UsersFilterViewModel::get_NameFilter()" Description="#9" Semantic="Getter" Ordinal="9" />
+        <JoinPoint Advised="#22=M:[App.Domain.WEB]App.Domain.WEB.Models.UsersFilterViewModel::set_NameFilter(System.String)" Description="#6" Semantic="Setter" Ordinal="10" />
+      </Target>
+    </Instance>
+    <Instance Declaration="#23=P:[App.Domain.WEB]App.Domain.WEB.Models.UsersFilterViewModel::TypeFilter()" Id="5ab688a73d8b3a49">
+      <Target LinesAvoided="4" Tags="premium">
+        <JoinPoint Advised="#24=M:[App.Domain.WEB]App.Domain.WEB.Models.UsersFilterViewModel::get_TypeFilter()" Description="#9" Semantic="Getter" Ordinal="11" />
+        <JoinPoint Advised="#25=M:[App.Domain.WEB]App.Domain.WEB.Models.UsersFilterViewModel::set_TypeFilter(System.String)" Description="#6" Semantic="Setter" Ordinal="12" />
+      </Target>
+    </Instance>
+    <Instance Declaration="#26=P:[App.Domain.WEB]App.Domain.WEB.Models.UsersFilterViewModel::AddressFilter()" Id="5ab688a795d8e188">
+      <Target LinesAvoided="4" Tags="premium">
+        <JoinPoint Advised="#27=M:[App.Domain.WEB]App.Domain.WEB.Models.UsersFilterViewModel::get_AddressFilter()" Description="#9" Semantic="Getter" Ordinal="13" />
+        <JoinPoint Advised="#28=M:[App.Domain.WEB]App.Domain.WEB.Models.UsersFilterViewModel::set_AddressFilter(System.String)" Description="#6" Semantic="Setter" Ordinal="14" />
+      </Target>
+    </Instance>
+  </Class>
+  <Annotation Target="#29=M:[App.Domain.WEB]App.Domain.WEB.Utils.StringInterceptorAttribute::OnGetValue(PostSharp.Aspects.LocationInterceptionArgs)" Arguments="#30=2" Description="#31=PostSharp estimates that 2 lines of code are saved every time this advice is applied. Use the [LinesOfCodeAvoided] attribute on the aspect or specify the LinesOfCodeAvoided property on the advice attribute to override this value." />
+  <Annotation Target="#32=M:[App.Domain.WEB]App.Domain.WEB.Utils.StringInterceptorAttribute::OnSetValue(PostSharp.Aspects.LocationInterceptionArgs)" Arguments="#30" Description="#31" />
+  <Annotation Target="#33=M:[App.Domain.WEB]App.Domain.WEB.Utils.StringArrayInterceptorAttribute::OnSetValue(PostSharp.Aspects.LocationInterceptionArgs)" Arguments="#30" Description="#31" />
+</Symbols>

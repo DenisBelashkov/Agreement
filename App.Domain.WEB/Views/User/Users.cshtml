@@ -1,0 +1,605 @@
+﻿@model PaginatedList<UserViewModel>
+@{
+    ViewData["Title"] = "Users";
+    int i = 0;
+}
+
+@*<input class="form-control my-2" type="text" id="search" placeholder="Search" />*@
+
+<div class="container row">
+    <div class="col-8">
+        <form asp-action="Users" method="get">
+            <div class="form-row my-2">
+
+                <div class="form-col mx-2">
+                    <input id="nameFilter" class="form-control" type="text" name="nameFilter" placeholder="User name" value="@ViewData["NameFilter"]"/>
+                </div>
+
+                <div class="form-col mr-2">
+                    <select id="typeFilter" class="form-control" name="typeFilter">
+                        <option value="">Select User Type</option>
+                        @foreach (var type in ViewData["UserTypes"] as IEnumerable<string>)
+                        {
+                            @if ((ViewData["UserTypeFilter"] as string).Contains(type))
+                            {
+                                <option value="@type" selected>@type</option>
+                            }
+                            else
+                            {
+                                <option value="@type">@type</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="form-col mx-2">
+                    <input id="addressFilter" class="form-control" type="text" name="addressFilter" placeholder="User Address" value="@ViewData["AddressFilter"] "/>
+                </div>
+            </div>
+
+            <div class="form-row my-2">
+                <label for="MinBoughtItemAmount" class="mx-2 col-form-label">Bought Item Amount:</label>
+                <div class="form-col mx-2">
+                    <input id="MinBoughtItemAmount" name="MinOrderAgrAmount" type="number" min=0 value="@ViewData["TotalBoughtAmountMin"]" class="form-control" placeholder="Min Bought Item Amount"/>
+                </div>
+
+                <div class="form-col mr-2">
+                    <input id="MaxBoughtItemAmount" name="MaxOrderAgrAmount" type="number" min=0 value="@ViewData["TotalBoughtAmountMax"]" class="form-control" placeholder="Max Bought Item Amount"/>
+                </div>
+
+            </div>
+
+            <div class="form-row my-2">
+                <label for="MinSoldItemAmount" class="mx-2 col-form-label">Sold Item Amount:</label>
+                <div class="form-col mx-2">
+                    <input id="MinSoldItemAmount" name="MinContractAgrAmount" type="number" min=0 value="@ViewData["TotalSoldAmountMin"]" class="form-control" placeholder="Min Sold Item Amount"/>
+                </div>
+
+                <div class="form-col mr-2">
+                    <input id="MaxSoldItemAmount" name="MaxContractAgrAmount" type="number" min=0 value="@ViewData["TotalSoldAmountMax"]" class="form-control" placeholder="Max Sold Item Amount"/>
+                </div>
+            </div>
+
+            <div class="form-row my-2">
+                <label for="MinSoldItemAmount" class="mx-2 col-form-label">Bought Item Cost:</label>
+                <div class="form-col mx-2">
+                    <input id="MinBoughtItemValue" name="MinOrderAgrValue" type="number" min=0 step="0.01" value="@ViewData["TotalBoughtValueMin"]" class="form-control" placeholder="Min Bought Item Cost"/>
+                </div>
+
+                <div class="form-col mr-2">
+                    <input id="MaxBoughtItemValue" name="MaxOrderAgrValue" type="number" min=0 step="0.01" value="@ViewData["TotalBoughtValueMax"]" class="form-control" placeholder="Max Bought Item Cost"/>
+                </div>
+            </div>
+
+            <div class="form-row my-2">
+                <label for="MinSoldItemValue" class="mx-2 col-form-label">Sold Item Cost:</label>
+                <div class="form-col mx-2">
+                    <input id="MinSoldItemValue" name="MinContractAgrValue" type="number" min=0 step="0.01" value="@ViewData["TotalSoldValueMin"]" class="form-control" placeholder="Min Sold Item Cost"/>
+                </div>
+
+                <div class="form-col mr-2">
+                    <input id="MaxSoldItemValue" name="MaxContractAgrValue" type="number" min=0 step="0.01" value="@ViewData["TotalSoldValueMax"]" class="form-control" placeholder="Max Sold Item Cost"/>
+                </div>
+            </div>
+
+            <div class="form-row mb-2">
+                <div class="form-col mr-2">
+                    <input id="StartDate" name="StartDate" type="date" value="@ViewData["StartDate"]" class="form-control" placeholder="From ConclusionDate"/>
+                </div>
+
+                <div class="form-col mr-2">
+                    <input id="EndDate" name="EndDate" type="date" value="@ViewData["End ConclusionDate"]" class="form-control" placeholder="To ConclusionDate"/>
+                </div>
+            </div>
+
+            <div class="form-row mb-2">
+                <div class="form-col mr-2">
+                    <input id="pageSize" class="form-control" type="number" name="pageSize" placeholder="Page Size" min="5" value="@Model.PageSize"/>
+                </div>
+
+            </div>
+
+            <div class="form-row my-2">
+                <div class="form-col">
+                    <input type="submit" value="Search" class="btn btn-outline-dark"/>
+                </div>
+                <div class="form-col mx-2">
+                    <a asp-action="Users" class="btn btn-outline-danger">Clear filters</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <div class="col-4">
+        <div class="row py-5 lead">Total Selected Cost: @ViewData["TotalValue"]</div>
+        <div class="row lead">Total Selected Amount: @ViewData["TotalAmount"]</div>
+    </div>
+</div>
+
+
+<table id="table" class="text-center table table-striped">
+<thead class="thead-light">
+<th scope="col">
+    <a asp-action="Users"
+       asp-route-sortOrder="@ViewData["IdSortParam"]"
+       asp-route-pageIndex="@(Model.PageIndex)"
+       asp-route-nameFilter="@ViewData["NameFilter"]"
+       asp-route-typeFilter="@ViewData["UserTypeFilter"]"
+       asp-route-addressFilter="@ViewData["AddressFilter"]"
+       asp-route-MinOrderAgrAmount="@ViewData["TotalBoughtAmountMin"]"
+       asp-route-MaxOrderAgrAmount="@ViewData["TotalBoughtAmountMax"]"
+       asp-route-MinContractAgrAmount="@ViewData["TotalSoldAmountMin"]"
+       asp-route-MaxContractAgrAmount="@ViewData["TotalSoldAmountMax"]"
+       asp-route-MinBoughtItemCost="@ViewData["TotalBoughtValueMin"]"
+       asp-route-MaxBoughtItemCost="@ViewData["TotalBoughtValueMax"]"
+       asp-route-MinSoldItemCost="@ViewData["TotalSoldValueMin"]"
+       asp-route-MaxSoldItemCost="@ViewData["TotalSoldValueMax"]"
+       asp-route-StartConclusionDate="@ViewData["StartDate"]"
+       asp-route-EndConclusionDate="@ViewData["EndDate"]"
+       asp-route-pageSize="@Model.PageSize">
+        #
+    </a>
+</th>
+<th scope="col">
+    <a asp-action="Users"
+       asp-route-sortOrder="@ViewData["NameSortParam"]"
+       asp-route-pageIndex="@(Model.PageIndex)"
+       asp-route-nameFilter="@ViewData["NameFilter"]"
+       asp-route-typeFilter="@ViewData["UserTypeFilter"]"
+       asp-route-addressFilter="@ViewData["AddressFilter"]"
+       asp-route-MinOrderAgrAmount="@ViewData["TotalBoughtAmountMin"]"
+       asp-route-MaxOrderAgrAmount="@ViewData["TotalBoughtAmountMax"]"
+       asp-route-MinContractAgrAmount="@ViewData["TotalSoldAmountMin"]"
+       asp-route-MaxContractAgrAmount="@ViewData["TotalSoldAmountMax"]"
+       asp-route-MinBoughtItemCost="@ViewData["TotalBoughtValueMin"]"
+       asp-route-MaxBoughtItemCost="@ViewData["TotalBoughtValueMax"]"
+       asp-route-MinSoldItemCost="@ViewData["TotalSoldValueMin"]"
+       asp-route-MaxSoldItemCost="@ViewData["TotalSoldValueMax"]"
+       asp-route-StartConclusionDate="@ViewData["StartDate"]"
+       asp-route-EndConclusionDate="@ViewData["EndDate"]"
+       asp-route-pageSize="@Model.PageSize">
+        Name
+    </a>
+</th>
+<th scope="col">
+    <a asp-action="Users"
+       asp-route-sortOrder="@ViewData["UserTypeSortParam"]"
+       asp-route-pageIndex="@(Model.PageIndex)"
+       asp-route-nameFilter="@ViewData["NameFilter"]"
+       asp-route-typeFilter="@ViewData["UserTypeFilter"]"
+       asp-route-addressFilter="@ViewData["AddressFilter"]"
+       asp-route-MinOrderAgrAmount="@ViewData["TotalBoughtAmountMin"]"
+       asp-route-MaxOrderAgrAmount="@ViewData["TotalBoughtAmountMax"]"
+       asp-route-MinContractAgrAmount="@ViewData["TotalSoldAmountMin"]"
+       asp-route-MaxContractAgrAmount="@ViewData["TotalSoldAmountMax"]"
+       asp-route-MinBoughtItemCost="@ViewData["TotalBoughtValueMin"]"
+       asp-route-MaxBoughtItemCost="@ViewData["TotalBoughtValueMax"]"
+       asp-route-MinSoldItemCost="@ViewData["TotalSoldValueMin"]"
+       asp-route-MaxSoldItemCost="@ViewData["TotalSoldValueMax"]"
+       asp-route-StartConclusionDate="@ViewData["StartDate"]"
+       asp-route-EndConclusionDate="@ViewData["EndDate"]"
+       asp-route-pageSize="@Model.PageSize">
+        User Type
+    </a>
+</th>
+<th scope="col">
+    <a asp-action="Users"
+       asp-route-sortOrder="@ViewData["AddressSortParam"]"
+       asp-route-pageIndex="@(Model.PageIndex)"
+       asp-route-nameFilter="@ViewData["NameFilter"]"
+       asp-route-typeFilter="@ViewData["UserTypeFilter"]"
+       asp-route-addressFilter="@ViewData["AddressFilter"]"
+       asp-route-MinOrderAgrAmount="@ViewData["TotalBoughtAmountMin"]"
+       asp-route-MaxOrderAgrAmount="@ViewData["TotalBoughtAmountMax"]"
+       asp-route-MinContractAgrAmount="@ViewData["TotalSoldAmountMin"]"
+       asp-route-MaxContractAgrAmount="@ViewData["TotalSoldAmountMax"]"
+       asp-route-MinBoughtItemCost="@ViewData["TotalBoughtValueMin"]"
+       asp-route-MaxBoughtItemCost="@ViewData["TotalBoughtValueMax"]"
+       asp-route-MinSoldItemCost="@ViewData["TotalSoldValueMin"]"
+       asp-route-MaxSoldItemCost="@ViewData["TotalSoldValueMax"]"
+       asp-route-StartConclusionDate="@ViewData["StartDate"]"
+       asp-route-EndConclusionDate="@ViewData["EndDate"]"
+       asp-route-pageSize="@Model.PageSize">
+        User Address
+    </a>
+</th>
+<th scope="col">
+    <a asp-action="Users"
+       asp-route-sortOrder="@ViewData["TotalBoughtValueSortParam"]"
+       asp-route-pageIndex="@(Model.PageIndex)"
+       asp-route-nameFilter="@ViewData["NameFilter"]"
+       asp-route-typeFilter="@ViewData["UserTypeFilter"]"
+       asp-route-addressFilter="@ViewData["AddressFilter"]"
+       asp-route-MinOrderAgrAmount="@ViewData["TotalBoughtAmountMin"]"
+       asp-route-MaxOrderAgrAmount="@ViewData["TotalBoughtAmountMax"]"
+       asp-route-MinContractAgrAmount="@ViewData["TotalSoldAmountMin"]"
+       asp-route-MaxContractAgrAmount="@ViewData["TotalSoldAmountMax"]"
+       asp-route-MinBoughtItemCost="@ViewData["TotalBoughtValueMin"]"
+       asp-route-MaxBoughtItemCost="@ViewData["TotalBoughtValueMax"]"
+       asp-route-MinSoldItemCost="@ViewData["TotalSoldValueMin"]"
+       asp-route-MaxSoldItemCost="@ViewData["TotalSoldValueMax"]"
+       asp-route-StartConclusionDate="@ViewData["StartDate"]"
+       asp-route-EndConclusionDate="@ViewData["EndDate"]"
+       asp-route-pageSize="@Model.PageSize">
+        Sum Bought
+    </a>
+</th>
+<th scope="col">
+    <a asp-action="Users"
+       asp-route-sortOrder="@ViewData["TotalSoldValueSortParam"]"
+       asp-route-pageIndex="@(Model.PageIndex)"
+       asp-route-nameFilter="@ViewData["NameFilter"]"
+       asp-route-typeFilter="@ViewData["UserTypeFilter"]"
+       asp-route-addressFilter="@ViewData["AddressFilter"]"
+       asp-route-MinOrderAgrAmount="@ViewData["TotalBoughtAmountMin"]"
+       asp-route-MaxOrderAgrAmount="@ViewData["TotalBoughtAmountMax"]"
+       asp-route-MinContractAgrAmount="@ViewData["TotalSoldAmountMin"]"
+       asp-route-MaxContractAgrAmount="@ViewData["TotalSoldAmountMax"]"
+       asp-route-MinBoughtItemCost="@ViewData["TotalBoughtValueMin"]"
+       asp-route-MaxBoughtItemCost="@ViewData["TotalBoughtValueMax"]"
+       asp-route-MinSoldItemCost="@ViewData["TotalSoldValueMin"]"
+       asp-route-MaxSoldItemCost="@ViewData["TotalSoldValueMax"]"
+       asp-route-StartConclusionDate="@ViewData["StartDate"]"
+       asp-route-EndConclusionDate="@ViewData["EndDate"]"
+       asp-route-pageSize="@Model.PageSize">
+        Sum Sold
+    </a>
+</th>
+<th scope="col">
+    <a asp-action="Users"
+       asp-route-sortOrder="@ViewData["TotalBoughtAmountSortParam"]"
+       asp-route-pageIndex="@(Model.PageIndex)"
+       asp-route-nameFilter="@ViewData["NameFilter"]"
+       asp-route-typeFilter="@ViewData["UserTypeFilter"]"
+       asp-route-addressFilter="@ViewData["AddressFilter"]"
+       asp-route-MinOrderAgrAmount="@ViewData["TotalBoughtAmountMin"]"
+       asp-route-MaxOrderAgrAmount="@ViewData["TotalBoughtAmountMax"]"
+       asp-route-MinContractAgrAmount="@ViewData["TotalSoldAmountMin"]"
+       asp-route-MaxContractAgrAmount="@ViewData["TotalSoldAmountMax"]"
+       asp-route-MinBoughtItemCost="@ViewData["TotalBoughtValueMin"]"
+       asp-route-MaxBoughtItemCost="@ViewData["TotalBoughtValueMax"]"
+       asp-route-MinSoldItemCost="@ViewData["TotalSoldValueMin"]"
+       asp-route-MaxSoldItemCost="@ViewData["TotalSoldValueMax"]"
+       asp-route-StartConclusionDate="@ViewData["StartDate"]"
+       asp-route-EndConclusionDate="@ViewData["EndDate"]"
+       asp-route-pageSize="@Model.PageSize">
+        Bought Amount
+    </a>
+</th>
+<th scope="col">
+    <a asp-action="Users"
+       asp-route-sortOrder="@ViewData["TotalSoldAmountSortParam"]"
+       asp-route-pageIndex="@(Model.PageIndex)"
+       asp-route-nameFilter="@ViewData["NameFilter"]"
+       asp-route-typeFilter="@ViewData["UserTypeFilter"]"
+       asp-route-addressFilter="@ViewData["AddressFilter"]"
+       asp-route-MinOrderAgrAmount="@ViewData["TotalBoughtAmountMin"]"
+       asp-route-MaxOrderAgrAmount="@ViewData["TotalBoughtAmountMax"]"
+       asp-route-MinContractAgrAmount="@ViewData["TotalSoldAmountMin"]"
+       asp-route-MaxContractAgrAmount="@ViewData["TotalSoldAmountMax"]"
+       asp-route-MinBoughtItemCost="@ViewData["TotalBoughtValueMin"]"
+       asp-route-MaxBoughtItemCost="@ViewData["TotalBoughtValueMax"]"
+       asp-route-MinSoldItemCost="@ViewData["TotalSoldValueMin"]"
+       asp-route-MaxSoldItemCost="@ViewData["TotalSoldValueMax"]"
+       asp-route-StartConclusionDate="@ViewData["StartDate"]"
+       asp-route-EndConclusionDate="@ViewData["EndDate"]"
+       asp-route-pageSize="@Model.PageSize">
+        Sold Amount
+    </a>
+</th>
+<th scope="col">Action</th>
+</thead>
+<tbody>
+@foreach (var user in Model)
+{
+    i++;
+    <tr>
+        <td>@i</td>
+        <td>@user.Name</td>
+        <td>@user.UserType</td>
+        <td>@user.Address.ToString()</td>
+        <td>@user.TotalOrderValue</td>
+        <td>@user.TotalContractValue</td>
+        <td>@user.TotalOrderAmount</td>
+        <td>@user.TotalContractAmount</td>
+        <td>
+            <button type="button" class="fill-modal btn btn-outline-primary" data-toggle="modal" value="@user.Id" data-target="#addingModal">
+                Edit
+            </button>
+
+            <a class="btn btn-outline-info" asp-controller="Index" asp-action="UserStats" asp-route-id="@user.Id">
+                Details
+            </a>
+
+            <a href="~/User/RemoveUser/?id=@user.Id" class="btn btn-outline-danger">
+                Remove
+            </a>
+        </td>
+    </tr>
+}
+</tbody>
+</table>
+
+
+<div class="float-right">
+    <button type="button" class="clear-modal btn btn-primary" data-toggle="modal" data-target="#addingModal">
+        Add New User
+    </button>
+    <a asp-action="Download"
+       asp-route-sortOrder="@ViewData["TotalSoldAmountSortParam"]"
+       asp-route-nameFilter="@ViewData["NameFilter"]"
+       asp-route-typeFilter="@ViewData["UserTypeFilter"]"
+       asp-route-addressFilter="@ViewData["AddressFilter"]"
+       asp-route-MinOrderAgrAmount="@ViewData["TotalBoughtAmountMin"]"
+       asp-route-MaxOrderAgrAmount="@ViewData["TotalBoughtAmountMax"]"
+       asp-route-MinContractAgrAmount="@ViewData["TotalSoldAmountMin"]"
+       asp-route-MaxContractAgrAmount="@ViewData["TotalSoldAmountMax"]"
+       asp-route-MinBoughtItemCost="@ViewData["TotalBoughtValueMin"]"
+       asp-route-MaxBoughtItemCost="@ViewData["TotalBoughtValueMax"]"
+       asp-route-MinSoldItemCost="@ViewData["TotalSoldValueMin"]"
+       asp-route-MaxSoldItemCost="@ViewData["TotalSoldValueMax"]"
+       asp-route-StartConclusionDate="@ViewData["StartDate"]"
+       asp-route-EndConclusionDate="@ViewData["EndDate"]"
+       class="btn btn-outline-primary">
+        Download As ExcelFile
+    </a>
+</div>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<div class="container">
+    <div class="row">
+        <a asp-action="Users"
+           asp-route-sortOrder="@ViewData["SortOrder"]"
+           asp-route-pageIndex="@(Model.PageIndex - 1)"
+           asp-route-nameFilter="@ViewData["NameFilter"]"
+           asp-route-typeFilter="@ViewData["UserTypeFilter"]"
+           asp-route-addressFilter="@ViewData["AddressFilter"]"
+           asp-route-MinOrderAgrAmount="@ViewData["TotalBoughtAmountMin"]"
+           asp-route-MaxOrderAgrAmount="@ViewData["TotalBoughtAmountMax"]"
+           asp-route-MinContractAgrAmount="@ViewData["TotalSoldAmountMin"]"
+           asp-route-MaxContractAgrAmount="@ViewData["TotalSoldAmountMax"]"
+           asp-route-MinBoughtItemCost="@ViewData["TotalBoughtValueMin"]"
+           asp-route-MaxBoughtItemCost="@ViewData["TotalBoughtValueMax"]"
+           asp-route-MinSoldItemCost="@ViewData["TotalSoldValueMin"]"
+           asp-route-MaxSoldItemCost="@ViewData["TotalSoldValueMax"]"
+           asp-route-StartConclusionDate="@ViewData["StartDate"]"
+           asp-route-EndConclusionDate="@ViewData["EndDate"]"
+           asp-route-pageSize="@Model.PageSize"
+           class="btn btn-outline-dark @prevDisabled">
+            Previous
+        </a>
+
+        <div class="border border-dark rounded input text-justify px-2 mx-2">
+            <span class="align-middle">Page Index: @Model.PageIndex</span>
+        </div>
+
+        <a asp-action="Users"
+           asp-route-sortOrder="@ViewData["SortOrder"]"
+           asp-route-pageIndex="@(Model.PageIndex + 1)"
+           asp-route-nameFilter="@ViewData["NameFilter"]"
+           asp-route-typeFilter="@ViewData["UserTypeFilter"]"
+           asp-route-addressFilter="@ViewData["AddressFilter"]"
+           asp-route-MinOrderAgrAmount="@ViewData["TotalBoughtAmountMin"]"
+           asp-route-MaxOrderAgrAmount="@ViewData["TotalBoughtAmountMax"]"
+           asp-route-MinContractAgrAmount="@ViewData["TotalSoldAmountMin"]"
+           asp-route-MaxContractAgrAmount="@ViewData["TotalSoldAmountMax"]"
+           asp-route-MinBoughtItemCost="@ViewData["TotalBoughtValueMin"]"
+           asp-route-MaxBoughtItemCost="@ViewData["TotalBoughtValueMax"]"
+           asp-route-MinSoldItemCost="@ViewData["TotalSoldValueMin"]"
+           asp-route-MaxSoldItemCost="@ViewData["TotalSoldValueMax"]"
+           asp-route-StartConclusionDate="@ViewData["StartDate"]"
+           asp-route-EndConclusionDate="@ViewData["EndDate"]"
+           asp-route-pageSize="@Model.PageSize"
+           class="btn btn-outline-dark @nextDisabled">
+            Next
+        </a>
+    </div>
+</div>
+
+
+<div class="modal fade" id="addingModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form class="needs-validation" method="post" novalidate>
+                <div id="modal-body" class="modal-body">
+                    <label for="Name" class="col-form-label float-left">User Name:</label>
+                    <input id="Name" name="Name" type="text" class="form-control" placeholder="User Name" required/>
+                    <div class="float-left invalid-feedback">Please provide an user name.</div>
+
+                    <div class="mt-2">
+                        <select id="Country" name="Country" class="form-control my-5" multiple required>
+                            @foreach (var type in ViewData["AllCountries"] as IEnumerable<string>)
+                            {
+                                <option value="@type">@type</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="my-2">
+                        <select id="City" name="City" class="form-control mb-5" multiple required>
+                            @foreach (var type in ViewData["AllCities"] as IEnumerable<string>)
+                            {
+                                <option value="@type">@type</option>
+                            }
+                        </select>
+                    </div>
+                    <div>
+                        <select id="Street" name="Street" class="form-control mb-5" multiple required>
+                            @foreach (var type in ViewData["AllStreets"] as IEnumerable<string>)
+                            {
+                                <option value="@type">@type</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="my-2">
+                        <select id="Building" name="Building" class="form-control mb-5" multiple required>
+                            @foreach (var type in ViewData["AllBuildings"] as IEnumerable<string>)
+                            {
+                                <option value="@type">@type</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="float-left invalid-feedback">Please provide an address.</div>
+
+
+                    <label for="UserType" class="form-label">User Type:</label>
+                    <select id="UserType" name="UserType" class="form-control">
+
+                        @foreach (var type in ViewData["UserTypes"] as IEnumerable<string>)
+                        {
+                            <option value="@type">@type</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="modal-footer form-check">
+                    <button type="submit" id="Id" class="btn btn-primary" name="Id">Edit User</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('#Country').select2({
+            allowClear: true,
+            tags: true,
+            theme: 'bootstrap4',
+            width: '100%',
+            dropdownParent: $('#modal-body'),
+            placeholder: "Select Country"
+        });
+
+        $('#City').select2({
+            allowClear: true,
+            tags: true,
+            theme: 'bootstrap4',
+            width: '100%',
+            dropdownParent: $('#modal-body'),
+            placeholder: "Select City"
+        });
+
+        $('#Street').select2({
+            allowClear: true,
+            tags: true,
+            theme: 'bootstrap4',
+            width: '100%',
+            dropdownParent: $('#modal-body'),
+            placeholder: "Select Street"
+        });
+
+        $('#Building').select2({
+            allowClear: true,
+            tags: true,
+            theme: 'bootstrap4',
+            width: '100%',
+            dropdownParent: $('#modal-body'),
+            placeholder: "Select Building"
+        });
+
+        $('#Building').next(".select2-container").hide()
+        $('#Street').next(".select2-container").hide()
+        $('#City').next(".select2-container").hide()
+    });
+
+    $('#Country').change(function () {
+        if ($(this).val() == "") {
+            $('#Building').next(".select2-container").hide()
+            $('#Street').next(".select2-container").hide()
+            $('#City').next(".select2-container").hide()
+        } else {
+            $('#City').next(".select2-container").show()
+        }
+    });
+
+    $('#City').change(function () {
+        if ($(this).val() == "") {
+            $('#Building').next(".select2-container").hide()
+            $('#Street').next(".select2-container").hide()
+         } else {
+            $('#Street').next(".select2-container").show()
+        }
+    });
+
+    $('#Street').change(function () {
+        if ($(this).val() == "") {
+            $('#Building').next(".select2-container").hide()
+        } else {
+            $('#Building').next(".select2-container").show()
+        }
+    });
+
+    $('.fill-modal').click(function () {
+        var $row = $(this).closest("tr");
+        $('#Name').val($row.children("td:nth-child(2)").text().trim());
+        $('#Id').val(parseInt($(this).val()));
+        $('#UserType').val($row.children("td:nth-child(3)").text().trim());
+
+        $('#Building').next(".select2-container").show()
+        $('#Street').next(".select2-container").show()
+        $('#City').next(".select2-container").show()
+
+        $('#Country').val($row.children("td:nth-child(4)").text().trim().split(", ",4 )[0].trim()).trigger('change');
+        $('#City').val($row.children("td:nth-child(4)").text().trim().split(", ", 4)[1].trim()).trigger('change');
+        $('#Street').val($row.children("td:nth-child(4)").text().trim().split(", ", 4)[2].trim()).trigger('change');
+        $('#Building').val($row.children("td:nth-child(4)").text().trim().split(", ", 4)[3].trim()).trigger('change');
+
+        console.log($row.children("td:nth-child(4)").text().trim().split(", ", 4)[0].trim());
+        console.log($row.children("td:nth-child(4)").text().trim().split(",  ", 4)[1].trim());
+        console.log($row.children("td:nth-child(4)").text().trim().split(", ", 4)[2].trim());
+        console.log($row.children("td:nth-child(4)").text().trim().split(", ", 4)[3].trim());
+    });
+
+    $('.clear-modal').click(function () {
+        $('#Name').val(null);
+        $('#Id').val(null);
+        $('#UserType').val(null);
+
+        $('#Country').val("").trigger('change');
+        $('#City').val("").trigger('change');
+        $('#Street').val("").trigger('change');
+        $('#Building').val("").trigger('change');
+
+        $('#Building').next(".select2-container").hide()
+        $('#Street').next(".select2-container").hide()
+        $('#City').next(".select2-container").hide()
+    });
+
+    $("#search").keyup(function () {
+        var searchText = $(this).val().toLowerCase();
+        // Show only matching TR, hide rest of them
+        $.each($("#table tbody tr"), function () {
+            if ($(this).text().toLowerCase().indexOf(searchText) === -1)
+                $(this).hide();
+            else
+                $(this).show();
+        });
+    });
+
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\denis\AppData\Local\JetBrains\Rider2020.3\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\denis\AppData\Local\JetBrains\Rider2020.3\resharper-host\Local\Transient\Rider\v203\SolutionCaches\_CommercialOperations.-726627744.00" t="ExcludeRecursive" />
+    <e p="D:\Projects\.NET\Agreement\CommercialOperationsCS-master" t="IncludeFlat">
+      <e p="App.Domain.BLL" t="IncludeRecursive">
+        <e p="App.Domain.BLL.csproj" t="IncludeRecursive" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="DTO" t="Include">
+          <e p="AddressDTO.cs" t="Include" />
+          <e p="AgreementDto.cs" t="Include" />
+          <e p="CategoryDTO.cs" t="Include" />
+          <e p="UserDTO.cs" t="Include" />
+        </e>
+        <e p="Infrastructure" t="Include">
+          <e p="ValidationException.cs" t="Include" />
+        </e>
+        <e p="Interfaces" t="Include">
+          <e p="IAddressService.cs" t="Include" />
+          <e p="IAgreementService.cs" t="Include" />
+          <e p="IBaseService.cs" t="Include" />
+          <e p="ICategoryService.cs" t="Include" />
+          <e p="IUserService.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="net5.0" t="Include">
+              <e p="App.Domain.BLL.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Services" t="Include">
+          <e p="AddressService.cs" t="Include" />
+          <e p="AgreementService.cs" t="Include" />
+          <e p="CategoryService.cs" t="Include" />
+          <e p="UserService.cs" t="Include" />
+        </e>
+      </e>
+      <e p="App.Domain.WEB" t="IncludeRecursive">
+        <e p="App.Domain.WEB.csproj" t="IncludeRecursive" />
+        <e p="appsettings.Development.json" t="Include" />
+        <e p="appsettings.json" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Controllers" t="Include">
+          <e p="AgreementController.cs" t="Include" />
+          <e p="IndexController.cs" t="Include" />
+          <e p="UserController.cs" t="Include" />
+        </e>
+        <e p="FileLogger.cs" t="Include" />
+        <e p="FileLoggerExtensions.cs" t="Include" />
+        <e p="FileLoggerProvider.cs" t="Include" />
+        <e p="log.txt" t="Include" />
+        <e p="Models" t="Include">
+          <e p="AdressViewModel.cs" t="Include" />
+          <e p="AgreementFilterViewModel.cs" t="Include" />
+          <e p="AgreementViewModel.cs" t="Include" />
+          <e p="CategoryViewModel.cs" t="Include" />
+          <e p="ErrorViewModel.cs" t="Include" />
+          <e p="PaginatedList.cs" t="Include" />
+          <e p="UsersFilterViewModel.cs" t="Include" />
+          <e p="UserStatsViewModel.cs" t="Include" />
+          <e p="UserViewModel.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="net5.0" t="Include">
+              <e p="App.Domain.WEB.AssemblyInfo.cs" t="Include" />
+              <e p="App.Domain.WEB.RazorAssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="launchSettings.json" t="Include" />
+        </e>
+        <e p="Startup.cs" t="Include" />
+        <e p="Utils" t="Include">
+          <e p="StringArrayInterceptor.cs" t="Include" />
+          <e p="StringInterceptor.cs" t="Include" />
+          <e p="Utils.cs" t="Include" />
+        </e>
+        <e p="Views" t="Include">
+          <e p="_ViewImports.cshtml" t="Include" />
+          <e p="_ViewStart.cshtml" t="Include" />
+          <e p="Agreement" t="Include">
+            <e p="Agreement.cshtml" t="Include" />
+          </e>
+          <e p="Index" t="Include">
+            <e p="Index.cshtml" t="Include" />
+            <e p="Privacy.cshtml" t="Include" />
+            <e p="UserStats.cshtml" t="Include" />
+          </e>
+          <e p="Shared" t="Include">
+            <e p="_Layout.cshtml" t="Include" />
+            <e p="_ValidationScriptsPartial.cshtml" t="Include" />
+            <e p="Error.cshtml" t="Include" />
+          </e>
+          <e p="User" t="Include">
+            <e p="Users.cshtml" t="Include" />
+          </e>
+        </e>
+        <e p="wwwroot" t="Include">
+          <e p="css" t="Include">
+            <e p="site.css" t="Include" />
+          </e>
+          <e p="favicon.ico" t="Include" />
+          <e p="js" t="Include">
+            <e p="site.js" t="Include" />
+          </e>
+          <e p="lib" t="Include">
+            <e p="bootstrap" t="Include">
+              <e p="dist" t="Include">
+                <e p="css" t="Include">
+                  <e p="bootstrap-grid.css" t="Include" />
+                  <e p="bootstrap-grid.css.map" t="Include" />
+                  <e p="bootstrap-grid.min.css" t="Include" />
+                  <e p="bootstrap-grid.min.css.map" t="Include" />
+                  <e p="bootstrap-reboot.css" t="Include" />
+                  <e p="bootstrap-reboot.css.map" t="Include" />
+                  <e p="bootstrap-reboot.min.css" t="Include" />
+                  <e p="bootstrap-reboot.min.css.map" t="Include" />
+                  <e p="bootstrap.css" t="Include" />
+                  <e p="bootstrap.css.map" t="Include" />
+                  <e p="bootstrap.min.css" t="Include" />
+                  <e p="bootstrap.min.css.map" t="Include" />
+                </e>
+                <e p="js" t="Include">
+                  <e p="bootstrap.bundle.js" t="Include" />
+                  <e p="bootstrap.bundle.js.map" t="Include" />
+                  <e p="bootstrap.bundle.min.js" t="Include" />
+                  <e p="bootstrap.bundle.min.js.map" t="Include" />
+                  <e p="bootstrap.js" t="Include" />
+                  <e p="bootstrap.js.map" t="Include" />
+                  <e p="bootstrap.min.js" t="Include" />
+                  <e p="bootstrap.min.js.map" t="Include" />
+                </e>
+              </e>
+              <e p="LICENSE" t="Include" />
+            </e>
+            <e p="jquery" t="Include">
+              <e p="dist" t="Include">
+                <e p="jquery.js" t="Include" />
+                <e p="jquery.min.js" t="Include" />
+                <e p="jquery.min.map" t="Include" />
+              </e>
+              <e p="LICENSE.txt" t="Include" />
+            </e>
+            <e p="jquery-validation" t="Include">
+              <e p="dist" t="Include">
+                <e p="additional-methods.js" t="Include" />
+                <e p="additional-methods.min.js" t="Include" />
+                <e p="jquery.validate.js" t="Include" />
+                <e p="jquery.validate.min.js" t="Include" />
+              </e>
+              <e p="LICENSE.md" t="Include" />
+            </e>
+            <e p="jquery-validation-unobtrusive" t="Include">
+              <e p="jquery.validate.unobtrusive.js" t="Include" />
+              <e p="jquery.validate.unobtrusive.min.js" t="Include" />
+              <e p="LICENSE.txt" t="Include" />
+            </e>
+          </e>
+          <e p="package-lock.json" t="Include" />
+        </e>
+      </e>
+      <e p="CommercialOperations" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="CommercialOperations.csproj" t="IncludeRecursive" />
+        <e p="MyLoggerProvider.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="net5.0" t="Include">
+              <e p="CommercialOperations.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Program.cs" t="Include" />
+      </e>
+      <e p="CommercialOperations.sln" t="IncludeFlat" />
+      <e p="CommercialOperationsLib" t="IncludeRecursive">
+        <e p="App.Domain.DAL.csproj" t="IncludeRecursive" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="EF" t="Include">
+          <e p="MyContext.cs" t="Include" />
+        </e>
+        <e p="Entities" t="Include">
+          <e p="Agreement.cs" t="Include" />
+          <e p="BaseEntity.cs" t="Include" />
+          <e p="Building.cs" t="Include" />
+          <e p="Category.cs" t="Include" />
+          <e p="CategoryAgreement.cs" t="Include" />
+          <e p="City.cs" t="Include" />
+          <e p="Country.cs" t="Include" />
+          <e p="Street.cs" t="Include" />
+          <e p="User.cs" t="Include" />
+          <e p="UserType.cs" t="Include" />
+        </e>
+        <e p="Interfaces" t="Include">
+          <e p="IBaseEntity.cs" t="Include" />
+          <e p="IRepository.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="net5.0" t="Include">
+              <e p="App.Domain.DAL.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Repositories" t="Include">
+          <e p="Repository.cs" t="Include" />
+        </e>
+      </e>
+      <e p="packages" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>
